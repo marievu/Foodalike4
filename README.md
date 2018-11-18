@@ -6,7 +6,7 @@ have u ever been called a lobster bisque? do boys dm u about ur baby back ribs? 
 
 [check out our app on heroku](https://foodalike4.herokuapp.com/)
 
-[our android backend](https://github.com/larakollokian/foodalike)
+[our python backend](https://github.com/larakollokian/foodalike)
 
 
 ### what it is
