@@ -6,12 +6,21 @@ import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_camera.*
+import java.io.ByteArrayOutputStream
+import org.json.JSONObject
+import android.graphics.drawable.BitmapDrawable
+import com.example.marievu.foodalike.R.id.photoImageView
+import com.loopj.android.http.JsonHttpResponseHandler
+import com.loopj.android.http.RequestParams
+
 
 class CameraActivity : AppCompatActivity() {
 
     val CAMERA_REQUEST_CODE =0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +31,18 @@ class CameraActivity : AppCompatActivity() {
             if(callCameraIntent.resolveActivity(packageManager) != null){
                 startActivityForResult(callCameraIntent, CAMERA_REQUEST_CODE)
             }
+        }
+        selfieButton.setOnClickListener{
+
+            val COMPRESSION_QUALITY = 100
+            val encodedImage: String
+            val byteArrayBitmapStream = ByteArrayOutputStream()
+            photoImageView.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
+                    byteArrayBitmapStream)
+            val b = byteArrayBitmapStream.toByteArray()
+            encodedImage = Base64.encodeToString(b, Base64.DEFAULT)
+
+            HttpUtils.post("api/" + encodedImage,  RequestParams(), JsonHttpResponseHandler())
 
         }
     }
@@ -41,6 +62,26 @@ class CameraActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun getStringFromBitmap(photoImageView: Bitmap): String {
+        /*
+         * This functions converts Bitmap picture to a string which can be
+         * JSONified.
+         * */
+
+        val COMPRESSION_QUALITY = 100
+        val encodedImage: String
+        val byteArrayBitmapStream = ByteArrayOutputStream()
+        photoImageView.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
+                byteArrayBitmapStream)
+        val b = byteArrayBitmapStream.toByteArray()
+        encodedImage = Base64.encodeToString(b, Base64.DEFAULT)
+        return encodedImage
+    }
+
+//    var bm = (photoImageView.getDrawable() as BitmapDrawable).bitmap
+//    var encodedImage = getStringFromBitmap(bm)
+//    var jsonObj = JSONObject("{\"image\":\" + encodedImage + \"}")
 
 
 }
