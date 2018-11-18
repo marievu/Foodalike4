@@ -15,9 +15,13 @@ We chose 24 categories from the [food-101 dataset](http://www.vision.ee.ethz.ch/
 ### who we are
 
 [Lara Kollokian](https://github.com/larakollokian)
+
 [Marie Vu](https://github.com/marievu)
+
 [Luke Ma](https://github.com/lukewma)
+
 [Ethan Itovitch](https://github.com/cheeth_keeth)
+
 
 ### what's next
 
